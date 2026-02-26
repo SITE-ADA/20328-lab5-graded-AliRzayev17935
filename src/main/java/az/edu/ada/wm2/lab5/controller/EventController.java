@@ -97,7 +97,7 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     // 7. FILTER BY DATE RANGE - GET /api/events/filter/date
 @GetMapping("/filter/date")
 public ResponseEntity<List<Event>> filterByDateRange(
@@ -111,6 +111,19 @@ public ResponseEntity<List<Event>> filterByDateRange(
 
     try {
         List<Event> events = eventService.getEventsByDateRange(start, end);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+}
+// 8. FILTER BY PRICE RANGE - GET /api/events/filter/price
+@GetMapping("/filter/price")
+public ResponseEntity<List<Event>> filterByPriceRange(
+        @RequestParam BigDecimal min,
+        @RequestParam BigDecimal max) {
+
+    try {
+        List<Event> events = eventService.getEventsByPriceRange(min, max);
         return new ResponseEntity<>(events, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
