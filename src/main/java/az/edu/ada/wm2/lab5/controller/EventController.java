@@ -151,5 +151,20 @@ public ResponseEntity<List<Event>> getUpcomingEvents() {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+// 11. UPDATE EVENT PRICE - PATCH /api/events/{id}/price
+@PatchMapping("/{id}/price")
+public ResponseEntity<Event> updateEventPrice(
+        @PathVariable UUID id,
+        @RequestParam BigDecimal price) {
+
+    try {
+        Event updatedEvent = eventService.updateEventPrice(id, price);
+        return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+    } catch (RuntimeException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+}
 
 }
