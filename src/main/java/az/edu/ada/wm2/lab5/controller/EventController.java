@@ -129,5 +129,16 @@ public ResponseEntity<List<Event>> filterByPriceRange(
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
+// 9. FILTER BY TAG - GET /api/events/filter/tag
+@GetMapping("/filter/tag")
+public ResponseEntity<List<Event>> filterByTag(@RequestParam String tag) {
+
+    try {
+        List<Event> events = eventService.getEventsByTag(tag);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
 }
